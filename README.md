@@ -3,11 +3,11 @@ Batch Delete unnecessary stuff from DAZ zip files.
 
 while some DAZ studio zip files contain:
 
-      -Manifest.dsx             Inutil  solo util para DIM  DazInstallManager.
+      -Manifest.dsx             Inutil para mi, util para DIM  DazInstallManager.
 
-      -Supplement.dsx           Inutil  solo util para DIM. 
+      -Supplement.dsx           Inutil para mi, util para DIM. 
 
-      -Content/                 Inutil  solo util para DIM.
+      -Content/                 Inutil para mi
 
             -data/              Util para MI.    
 
