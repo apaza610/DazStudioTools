@@ -22,8 +22,7 @@ def arreglarZIP(folder, documento):
     miFileNEW = miFileOLD.split('.')[0] + 'FIX' + '.zip'
     NecesitaArreglo = False
 
-    miZipOLD = zipfile.ZipFile(miFolderBASE/miFileOLD)             # objeto ZIP viejo sucio .duf , readmes, etc
-    miZipNEW = zipfile.ZipFile(miFolderBASE/miFileNEW,'w')                      # objeto ZIP nuevo limpio 
+    miZipOLD = zipfile.ZipFile(miFolderBASE/miFileOLD)             # objeto ZIP viejo sucio .duf , Content, etc
 
     if not os.path.exists(miFolderBASE/folderTEMP):         
         os.makedirs(miFolderBASE/folderTEMP)                # crear folder si no existe
@@ -37,6 +36,7 @@ def arreglarZIP(folder, documento):
             print("----------------------ZIP sin folder llamado: CONTENT------------------------")
 
     if NecesitaArreglo:
+        miZipNEW = zipfile.ZipFile(miFolderBASE/miFileNEW,'w')         # objeto ZIP nuevo limpio 
         os.chdir(miFolderBASE/folderTEMP/'Content')                 # entrando 1 nivel 
     
         # Compresion de archivos uno por uno al ZIP
@@ -48,13 +48,13 @@ def arreglarZIP(folder, documento):
         os.chdir(miFolderBASE)           
         print("quiero ir aqui: .....: " + str(miFolderBASE))                   # saliendo al nivel base
         print("Aora estoy aqui  !!!!:     " + os.getcwd())
-    
+        miZipNEW.close()
+ 
     shutil.rmtree(miFolderBASE/folderTEMP)              # TODO borrar material temporal ya inutil
 
-    miZipOLD.close()
-    miZipNEW.close()
+    miZipOLD.close()   
     
-    return miFileNEW            #,NecesitaArreglo
+    return miFileNEW,NecesitaArreglo            #,NecesitaArreglo
 
 
 def main():
@@ -63,16 +63,12 @@ def main():
         for dcmnto in dcmntos:
             if dcmnto.endswith('.zip'):
                 print(raiz + "...." + dcmnto)
-                resultado = arreglarZIP(raiz, dcmnto)
-                os.remove(os.path.join(raiz,dcmnto))
-                os.rename(resultado, os.path.join(raiz,dcmnto))
+                nombreNewZIP,NecesitaArreglo = arreglarZIP(raiz, dcmnto)
+
+                if NecesitaArreglo:
+                    os.remove(os.path.join(raiz,dcmnto))
+                    os.rename(nombreNewZIP, os.path.join(raiz,dcmnto))
                 
-    """ for nombreFile in os.listdir('.'):
-        if nombreFile.endswith('.zip'):
-            resultado = arreglarZIP(nombreFile)
-            #if resultado[1]:
-            os.remove(nombreFile)
-            os.rename(resultado,nombreFile) """
 
 if __name__ == "__main__": main()
 
