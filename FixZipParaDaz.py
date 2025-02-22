@@ -59,15 +59,17 @@ def arreglarZIP(folder, documento):
 
 def main():
 
+    print("esto esta funcionando")
+
     for raiz, folders, dcmntos in os.walk(os.getcwd()):
         for dcmnto in dcmntos:
             if dcmnto.endswith('.zip'):
                 print(raiz + "...." + dcmnto)
-                nombreNewZIP,NecesitaArreglo = arreglarZIP(raiz, dcmnto)
+                # nombreNewZIP,NecesitaArreglo = arreglarZIP(raiz, dcmnto)
 
-                if NecesitaArreglo:
-                    os.remove(os.path.join(raiz,dcmnto))
-                    os.rename(nombreNewZIP, os.path.join(raiz,dcmnto))
+                # if NecesitaArreglo:
+                #     os.remove(os.path.join(raiz,dcmnto))
+                #     os.rename(nombreNewZIP, os.path.join(raiz,dcmnto))
                 
 
 if __name__ == "__main__": main()
