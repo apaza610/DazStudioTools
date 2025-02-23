@@ -43,7 +43,7 @@
           </object>
         </child>
         <child>
-          <object class="ttk.Entry" id="entry1">
+          <object class="ttk.Entry" id="entryFolderDAZ" named="True">
             <property name="justify">left</property>
             <property name="text" translatable="yes">E:\assetsDaz\</property>
             <property name="width">30</property>
@@ -76,7 +76,7 @@
           </object>
         </child>
         <child>
-          <object class="ttk.Entry" id="entry2">
+          <object class="ttk.Entry" id="entryFolderZIPs" named="True">
             <property name="justify">left</property>
             <property name="takefocus">false</property>
             <property name="text" translatable="yes">E:\assets3D\main\env_Egipto\</property>
