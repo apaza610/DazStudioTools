@@ -52,7 +52,7 @@ class ApazaUI:
                                 messagebox.showinfo("Mensaje", f"El {documento} no contiene folder Content")
                                 break;
         messagebox.showinfo("Mensaje", "deCompresion ejecutada")
-        # self.resize_images()
+        self.resize_images()
         self.mover_contents()
 
     def resize_images(self):
@@ -69,20 +69,12 @@ class ApazaUI:
     def mover_contents(self):
         self.folderDAZ = self.builder.get_object("entryFolderDAZ").get()
         self.folderZIPs = self.builder.get_object("entryFolderZIPs").get()
-        # os.chdir(self.folderZIPs.get())
-
-        # for item in os.listdir(self.folderZIPs.get()+"Content"):
-        #     src_item = os.path.join(self.folderZIPs.get()+"Content", item)
-        #     dst_item = os.path.join(self.folderDAZ.get())
-        #     shutil.move(src_item, dst_item)
-            # shutil.rmtree(src_item)
-            # messagebox.showinfo("Mensaje", "desde: " + src_item + " hasta: " + dst_item)
-        powershell_command = f'Move-Item -Path "{self.folderZIPs}\\Content" -Destination "{self.folderDAZ}" -Force'
-
-        # Run the PowerShell command
+        
+        powershell_command = f'Copy-Item -Path "{self.folderZIPs}\\Content\\*" -Destination "{self.folderDAZ}" -Recurse -Force'
         try:
             subprocess.run(["powershell", "-Command", powershell_command], check=True)
             print(f"contenidos movidos successfully.")
+            shutil.rmtree(self.folderZIPs + "/Content")
         except subprocess.CalledProcessError as e:
             print(f"Error moviendo contenidos: {e}")
         
