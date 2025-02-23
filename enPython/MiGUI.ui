@@ -69,7 +69,8 @@
         <child>
           <object class="ttk.Label" id="label2">
             <property name="justify">center</property>
-            <property name="text" translatable="yes">folder .zip </property>
+            <property name="relief">flat</property>
+            <property name="text" translatable="yes">folder Zip</property>
             <layout manager="pack">
               <property name="side">left</property>
             </layout>
@@ -91,21 +92,44 @@
       </object>
     </child>
     <child>
-      <object class="ttk.Frame" id="frame3">
+      <object class="ttk.Labelframe" id="labelframe1">
         <property name="height">200</property>
-        <property name="width">200</property>
+        <property name="text" translatable="yes">compressTextures</property>
+        <property name="width">280</property>
         <layout manager="grid">
           <property name="column">0</property>
-          <property name="padx">2</property>
-          <property name="pady">2</property>
           <property name="row">2</property>
         </layout>
         <child>
           <object class="ttk.Radiobutton" id="radiobutton1">
-            <property name="text" translatable="yes">compressTexturesToMax1080p
-</property>
+            <property name="cursor">arrow</property>
+            <property name="text" translatable="yes">nada</property>
+            <property name="value">nada</property>
+            <property name="variable">string:v_compresion</property>
             <layout manager="pack">
-              <property name="side">top</property>
+              <property name="padx">8</property>
+              <property name="side">left</property>
+            </layout>
+          </object>
+        </child>
+        <child>
+          <object class="ttk.Radiobutton" id="radiobutton4">
+            <property name="cursor">arrow</property>
+            <property name="text" translatable="yes">1024&gt;</property>
+            <property name="value">1024&gt;</property>
+            <property name="variable">string:v_compresion</property>
+            <layout manager="pack">
+              <property name="side">left</property>
+            </layout>
+          </object>
+        </child>
+        <child>
+          <object class="ttk.Radiobutton" id="radiobutton5">
+            <property name="text" translatable="yes">2048&gt;</property>
+            <property name="value">2048&gt;</property>
+            <property name="variable">string:v_compresion</property>
+            <layout manager="pack">
+              <property name="side">left</property>
             </layout>
           </object>
         </child>
@@ -114,7 +138,7 @@
     <child>
       <object class="ttk.Frame" id="frame4">
         <property name="height">200</property>
-        <property name="width">200</property>
+        <property name="width">300</property>
         <layout manager="grid">
           <property name="column">0</property>
           <property name="padx">2</property>
@@ -122,11 +146,30 @@
           <property name="row">3</property>
         </layout>
         <child>
+          <object class="ttk.Label" id="labelMensaje" named="True">
+            <property name="font">TkDefaultFont</property>
+            <property name="style">danger.TLabel</property>
+            <property name="takefocus">true</property>
+            <property name="text" translatable="yes">...</property>
+            <property name="width">25</property>
+            <layout manager="pack">
+              <property name="anchor">w</property>
+              <property name="expand">true</property>
+              <property name="fill">x</property>
+              <property name="side">left</property>
+            </layout>
+          </object>
+        </child>
+        <child>
           <object class="ttk.Button" id="button1">
             <property name="command" type="command" cbtype="simple">onBtnEjecutarClicked</property>
             <property name="text" translatable="yes">ejecutar</property>
             <layout manager="pack">
-              <property name="side">top</property>
+              <property name="anchor">e</property>
+              <property name="expand">false</property>
+              <property name="fill">x</property>
+              <property name="padx">4</property>
+              <property name="side">right</property>
             </layout>
           </object>
         </child>
