@@ -79,8 +79,10 @@
         <child>
           <object class="ttk.Entry" id="entryFolderZIPs" named="True">
             <property name="justify">left</property>
-            <property name="takefocus">false</property>
-            <property name="text" translatable="yes">E:\assets3D\main\env_Egipto\</property>
+            <property name="state">normal</property>
+            <property name="style">primary.TEntry</property>
+            <property name="takefocus">true</property>
+            <property name="validate">none</property>
             <property name="width">30</property>
             <layout manager="pack">
               <property name="expand">true</property>

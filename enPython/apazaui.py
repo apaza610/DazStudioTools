@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 import pathlib
 import subprocess
+import sys
 import tkinter as tk
 from tkinter import messagebox
 import pygubu
@@ -10,12 +11,13 @@ import os
 import shutil
 from pathlib import Path
 
+import winsound
+
 PROJECT_PATH = pathlib.Path(__file__).parent
 PROJECT_UI = PROJECT_PATH / "MiGUI.ui"
 RESOURCE_PATHS = [PROJECT_PATH]
 
 class ApazaUI:
-    listaZIPs = []
 
     def __init__(self, master=None):
         self.builder = pygubu.Builder()
@@ -25,18 +27,22 @@ class ApazaUI:
         self.mainwindow: tk.Toplevel = self.builder.get_object("toplevel1", master)
         self.builder.connect_callbacks(self)
 
-        self.folderZIPs = self.builder.get_object("entryFolderZIPs")
-        self.mensaje = self.builder.get_object("labelMensaje")
         self.v_elegido = self.builder.get_variable("v_compresion")
+        self.v_elegido.set("1024>")             # opcion preDefinida
 
     def run(self):
         self.mainwindow.mainloop()
 
     # para cada zip en este folder extraerlo en este mismo folder
     def onBtnEjecutarClicked(self):
+        self.folderZIPs = self.builder.get_object("entryFolderZIPs")
+        self.mensaje = self.builder.get_object("labelMensaje")
+        self.mensaje.configure(text="..")
+
         os.chdir(self.folderZIPs.get())        # cambiar a folder de trabajo
         
-        # fijate si el zip contiene folder "Content", de lo contrario advertir a usuario
+        # advertir a usuario si el .zip no contiene folder "Content"
+        can_deCompress: bool = False
         for raiz, folders, documentos in os.walk(os.getcwd()):
             for documento in documentos:
                 if documento.endswith('.zip'):
@@ -44,17 +50,32 @@ class ApazaUI:
                     with zipfile.ZipFile(documento) as zip_ref:
                         for item in zip_ref.namelist():
                             if item.startswith('Content'):
-                                # messagebox.showinfo("Mensaje", "El .zip contiene folder Content")
-                                with zipfile.ZipFile(raiz + "\\" + documento, 'r') as zip_ref2:
-                                    zip_ref2.extractall(raiz)
-                                break;
+                                can_deCompress = True
+                                break
                             else:
+                                can_deCompress = False
                                 messagebox.showinfo("Mensaje", f"El {documento} no contiene folder Content")
-                                break;
-        self.mensaje.configure(text="desComprimido")
-        # messagebox.showinfo("Mensaje", "deCompresion ejecutada")
-        self.resize_images()
-        self.mover_contents()
+                                sys.exit()
+                            
+        if can_deCompress == True:
+            for zip_file in Path(os.getcwd()).rglob('*.zip'):
+                with zipfile.ZipFile(zip_file, 'r') as zip_ref:
+                    print(f"desComprimiendo {zip_ref.filename}")
+                    zip_ref.extractall(os.getcwd())
+                self.mensaje.configure(text="desComprimido..")
+                # messagebox.showinfo("Mensaje", "desComprimido")        
+            # messagebox.showinfo("Mensaje", "deCompresion ejecutada")
+            
+            winsound.Beep(450,500)
+            print("------------------unCompress terminado-------------------------")
+            self.resize_images()
+            winsound.Beep(550,500)
+            print("------------------reSize terminado-------------------------")
+            self.mover_contents()
+            winsound.Beep(650,500)
+            print("------------------move to destination terminado-------------------------")
+        else:
+            self.mensaje.configure(text="still Comprimido")
 
     def resize_images(self):
         folder_path = Path(self.folderZIPs.get() + "/Content")
@@ -67,12 +88,14 @@ class ApazaUI:
                         self.mensaje.configure(text="NO se reDimensionara")
                     case "1024>":
                         comando = ['magick', unfile, '-resize', '1024>', unfile ]
+                        print(f"reSizing {unfile}")
                         subprocess.run(comando, check=True)
-                        self.mensaje.configure(text="reDimension 1K")
+                        # self.mensaje.configure(text="reDimension 1K")
                     case "2048>":
                         comando = ['magick', unfile, '-resize', '2048>', unfile ]
+                        print(f"reSizing {unfile}")
                         subprocess.run(comando, check=True)
-                        self.mensaje.configure(text="reDimension 2K")
+                        # self.mensaje.configure(text="reDimension 2K")
                     case _:
                         print("ninguna opcion elegida")
         # messagebox.showinfo("Mensaje", "reSize ejecutado")
@@ -91,7 +114,6 @@ class ApazaUI:
         except subprocess.CalledProcessError as e:
             self.mensaje.configure(text="Error al mover")
             print(f"Error moviendo contenidos: {e}")
-
         # messagebox.showinfo("Mensaje", "mover ejecutado")
 
 if __name__ == "__main__":
