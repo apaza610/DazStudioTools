@@ -1,7 +1,9 @@
-# FixZIPparaDAZ
-Batch Delete unnecessary stuff from DAZ zip files.
+# tool to fill Daz library
+1) batch deCompress .zip files
+2) batch reSize textures to a maximun of 1024px or 2048px
+3) move the Content to my custom daz library folder
 
-while some DAZ studio zip files contain:
+The content of the folder Content looks like this:
 
       -Manifest.dsx             Inutil para mi, util para DIM  DazInstallManager.
 
@@ -17,7 +19,6 @@ while some DAZ studio zip files contain:
 
             -.....etc.
 
-other DAZ zip files have just the Useful folders.
+This program helps me fill my custom Daz library from compressed .zip files
 
-This program deletes useless files & move remaining folders to root folder (Content folder is deleted), 
-this makes all my DAZ zip files have same structure, therefore easy to install manually in my library
+![explicacionFuncionamiento](https://github.com/user-attachments/assets/00af8409-e781-4797-8bc8-ce9671baa4f2)
