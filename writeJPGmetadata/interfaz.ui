@@ -24,6 +24,7 @@
   <object class="tk.Toplevel" id="toplevel1">
     <property name="height">200</property>
     <property name="iconbitmap">favicon.ico</property>
+    <property name="title" translatable="yes">IPTC metadata insert tool</property>
     <property name="width">400</property>
     <child>
       <object class="ttk.Frame" id="frame1">
