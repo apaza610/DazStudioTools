@@ -6,7 +6,7 @@ from tkinter import filedialog
 
 import zipfile
 from iptcinfo3 import IPTCInfo
-import pyperclip
+import os
 
 PROJECT_PATH = pathlib.Path(__file__).parent
 PROJECT_UI = PROJECT_PATH / "interfaz.ui"
@@ -43,6 +43,10 @@ class OrozcoUI:
         info["caption/abstract"] = self.entryMetadata.get()
         info.save()
         print("IPTC caption added successfully!")
+        basura = jpg_path + "~"
+        if os.path.exists(basura):
+            os.remove(basura)
+            print("se ha quitado la basura")
 
     def onClickLeerZip(self):
         zip_path = self.pathchooserinput1.entry.get()
@@ -61,6 +65,9 @@ class OrozcoUI:
                     print(f"Directory: {item}")
                 # else:
                 #     print(f"File: {item}")
+    
+    def onMouseAdentro(self, event=None):
+        self.entryMetadata.delete(0, tk.END)
 
 if __name__ == "__main__":
     app = OrozcoUI()

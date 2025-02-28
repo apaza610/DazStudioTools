@@ -72,8 +72,9 @@
           </object>
         </child>
         <child>
-          <object class="ttk.Label" id="label2">
+          <object class="ttk.Label" id="labelMetadata" named="True">
             <property name="text" translatable="yes">metadata:</property>
+            <bind sequence="&lt;Enter&gt;" handler="onMouseAdentro" add="True" />
             <layout manager="pack">
               <property name="side">left</property>
             </layout>
