@@ -42,7 +42,8 @@ class OrozcoUI:
         print(jpg_path)
 
         info = IPTCInfo(jpg_path, force=True)
-        info["caption/abstract"] = self.entryMetadata.get()
+        cadena = self.entryMetadata.get()
+        info["caption/abstract"] = re.sub("\n+","",cadena)
         info.save()
         print("IPTC caption added successfully!")
         self.entryMetadata.delete(0, tk.END)
