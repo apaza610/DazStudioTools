@@ -7,6 +7,8 @@ from tkinter import filedialog
 import zipfile
 from iptcinfo3 import IPTCInfo
 import os
+import pyperclip
+import re
 
 PROJECT_PATH = pathlib.Path(__file__).parent
 PROJECT_UI = PROJECT_PATH / "interfaz.ui"
@@ -61,13 +63,16 @@ class OrozcoUI:
             # Print each file/folder in the zip file
             for item in zip_contents:
                 parts = item.split('/')
-                if len(parts) == zip_nivel and parts[0] and  zip_ref.getinfo(item).is_dir():
-                    print(f"Directory: {item}")
+                if len(parts) == zip_nivel and parts[0] and  zip_ref.getinfo(item).is_dir() and not (re.search(r"/data/", item) or re.search(r"/Runtime/", item)):
+                    cadena = item.replace('Content/','')
+                    print(f"{cadena}")
+                    pyperclip.copy(cadena)
                 # else:
                 #     print(f"File: {item}")
     
     def onMouseAdentro(self, event=None):
         self.entryMetadata.delete(0, tk.END)
+        self.entryMetadata.insert(0, pyperclip.paste())
 
 if __name__ == "__main__":
     app = OrozcoUI()
