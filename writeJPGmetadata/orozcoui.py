@@ -45,6 +45,7 @@ class OrozcoUI:
         info["caption/abstract"] = self.entryMetadata.get()
         info.save()
         print("IPTC caption added successfully!")
+        self.entryMetadata.delete(0, tk.END)
         basura = jpg_path + "~"
         if os.path.exists(basura):
             os.remove(basura)
@@ -63,7 +64,7 @@ class OrozcoUI:
             # Print each file/folder in the zip file
             for item in zip_contents:
                 parts = item.split('/')
-                if len(parts) == zip_nivel and parts[0] and  zip_ref.getinfo(item).is_dir() and not (re.search(r"/data/", item) or re.search(r"/Runtime/", item)):
+                if len(parts) == zip_nivel and parts[0] and  zip_ref.getinfo(item).is_dir() and not (re.search(r"/[Dd]ata/", item) or re.search(r"/[Rr]untime/", item)):
                     cadena = item.replace('Content/','')
                     print(f"{cadena}")
                     pyperclip.copy(cadena)
@@ -73,6 +74,12 @@ class OrozcoUI:
     def onMouseAdentro(self, event=None):
         self.entryMetadata.delete(0, tk.END)
         self.entryMetadata.insert(0, pyperclip.paste())
+
+    def arreglarElPath(self, event=None):
+        cadena = self.pathchooserinput1.entry.get()
+        if ".zip" in cadena:
+            self.pathchooserinput1.configure(path=os.path.dirname(cadena))
+            print("mouse ha entrado al area del widget")
 
 if __name__ == "__main__":
     app = OrozcoUI()

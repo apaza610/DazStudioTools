@@ -46,8 +46,8 @@
         <child>
           <object class="pygubu.widgets.PathChooserInput" id="pathchooserinput1">
             <property name="defaultextension">.zip</property>
-            <property name="initialdir">E:\assets3D\main\</property>
             <property name="type">file</property>
+            <bind sequence="&lt;Enter&gt;" handler="arreglarElPath" add="True" />
             <layout manager="pack">
               <property name="expand">true</property>
               <property name="fill">x</property>
