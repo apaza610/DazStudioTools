@@ -17,6 +17,8 @@ import shutil
 from pathlib import Path
 import winsound
 
+from PIL import Image
+
 PROJECT_PATH = pathlib.Path(__file__).parent
 PROJECT_UI = PROJECT_PATH / "interfaz.ui"
 RESOURCE_PATHS = [PROJECT_PATH]
@@ -173,6 +175,47 @@ class HomarUI:
         if os.path.exists(basura):
             os.remove(basura)
             print("se ha quitado la basura")
+
+    #----------------- Tab3: reName JPGs for my website -----------------------
+
+    def pegarPathJPG(self, event=None):
+        self.entryPathJPG = self.builder.get_object("entryPathJPG")
+        self.entryPathJPG.delete(0, tk.END)
+        self.pathOldDelJPG = Path(pyperclip.paste())
+        self.entryPathJPG.insert(0, self.pathOldDelJPG)
+
+    def buildNameJPG(self):
+        self.entryNewNameJPG = self.builder.get_object("entryNewNameJPG")
+        # folderDelJPG = self.pathOldDelJPG.parent
+        nombreDelJPG = self.pathOldDelJPG.stem      # nombre sin extension
+
+        self.v_tipoAsset = self.builder.get_variable("v_tipoAsset")
+        self.v_generacion = self.builder.get_variable("v_generacion")
+        self.v_genero = self.builder.get_variable("v_genero")
+        nombreDelJPG = f"{self.v_tipoAsset.get()}_{self.v_generacion.get()}{self.v_genero.get()}{nombreDelJPG}"
+
+        self.entryNewNameJPG.delete(0, tk.END)
+        # self.entryNewNameJPG.insert(0, folderDelJPG / (nombreDelJPG.replace(" ", "_")))
+        self.entryNewNameJPG.insert(0, nombreDelJPG)
+        self.pathNewDelJPG = self.pathOldDelJPG.parent / (self.entryNewNameJPG.get() + ".jpg")
+
+    def singleRenameJPG(self):
+        # resize if the image is bigger than 400px
+        if self.pathOldDelJPG.suffix.lower() != ".jpg":             # convertir a JPG si es necesario
+            imagen = Image.open(self.pathOldDelJPG)
+            imagen.convert("RGB").save(self.pathNewDelJPG, "JPEG")
+            os.remove(self.pathOldDelJPG)
+        else:                                                       # o simplemente renombrar
+            os.rename(self.pathOldDelJPG, self.pathNewDelJPG)
+
+        # reSize if one side of the image is more than 400px
+        subprocess.run(["magick","convert",self.pathNewDelJPG,"-resize","400x400>",self.pathNewDelJPG])
+
+    def batchRenameJPGs(self):
+        
+        pass
+
+    
 
 if __name__ == "__main__":
     app = HomarUI()
