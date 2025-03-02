@@ -1,0 +1,316 @@
+<?xml version='1.0' encoding='utf-8'?>
+<interface version="1.4" author="PygubuDesigner 0.39.3">
+  <project>
+    <settings>
+      <setting id="name">DazTool</setting>
+      <setting id="description">Helps to populate from ZIPs to Daz library folder
+Adds metadata to JPGs that I use in my webSite that shows all assets I have</setting>
+      <setting id="module_name">homar</setting>
+      <setting id="template">application</setting>
+      <setting id="main_widget">toplevel2</setting>
+      <setting id="main_classname">Homar</setting>
+      <setting id="main_menu" />
+      <setting id="output_dir" />
+      <setting id="output_dir2" />
+      <setting id="import_tkvariables">False</setting>
+      <setting id="use_ttk_styledefinition_file">False</setting>
+      <setting id="use_i18n">False</setting>
+      <setting id="all_ids_attributes">False</setting>
+      <setting id="generate_code_onsave">False</setting>
+      <setting id="use_window_centering_code">False</setting>
+      <setting id="ttk_style_definition_file" />
+    </settings>
+    <customwidgets />
+  </project>
+  <object class="tk.Toplevel" id="toplevel2">
+    <property name="height">160</property>
+    <property name="title" translatable="yes">DazStudio tools</property>
+    <property name="width">440</property>
+    <child>
+      <object class="ttk.Frame" id="frame5">
+        <property name="width">200</property>
+        <layout manager="pack">
+          <property name="padx">4</property>
+          <property name="pady">4</property>
+          <property name="side">top</property>
+        </layout>
+        <child>
+          <object class="ttk.Notebook" id="notebook2">
+            <property name="width">440</property>
+            <layout manager="pack">
+              <property name="side">top</property>
+            </layout>
+            <child>
+              <object class="ttk.Notebook.Tab" id="tab1">
+                <property name="text" translatable="yes">PopulateDazLibrary</property>
+                <child>
+                  <object class="ttk.Frame" id="frame6">
+                    <property name="width">200</property>
+                    <layout manager="pack">
+                      <property name="side">top</property>
+                    </layout>
+                    <child>
+                      <object class="ttk.Frame" id="frame1">
+                        <property name="width">200</property>
+                        <layout manager="pack">
+                          <property name="pady">4</property>
+                          <property name="side">top</property>
+                        </layout>
+                        <child>
+                          <object class="ttk.Label" id="label3">
+                            <property name="text" translatable="yes">folder Daz</property>
+                            <layout manager="pack">
+                              <property name="side">left</property>
+                            </layout>
+                          </object>
+                        </child>
+                        <child>
+                          <object class="ttk.Entry" id="entryFolderDAZ" named="True">
+                            <property name="text" translatable="yes">E:\assetsDaz\</property>
+                            <property name="width">60</property>
+                            <layout manager="pack">
+                              <property name="side">right</property>
+                            </layout>
+                          </object>
+                        </child>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="ttk.Frame" id="frame2">
+                        <property name="width">200</property>
+                        <layout manager="pack">
+                          <property name="pady">4</property>
+                          <property name="side">top</property>
+                        </layout>
+                        <child>
+                          <object class="ttk.Label" id="label4">
+                            <property name="relief">flat</property>
+                            <property name="state">normal</property>
+                            <property name="style">danger.Inverse.TLabel</property>
+                            <property name="takefocus">true</property>
+                            <property name="text" translatable="yes">folder ZIPs</property>
+                            <layout manager="pack">
+                              <property name="side">left</property>
+                            </layout>
+                          </object>
+                        </child>
+                        <child>
+                          <object class="ttk.Entry" id="entryFolderZIPs" named="True">
+                            <property name="width">60</property>
+                            <layout manager="pack">
+                              <property name="side">right</property>
+                            </layout>
+                          </object>
+                        </child>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="ttk.Labelframe" id="labelframe1">
+                        <property name="text" translatable="yes">compress textures before sending?</property>
+                        <property name="width">300</property>
+                        <layout manager="pack">
+                          <property name="ipadx">4</property>
+                          <property name="ipady">4</property>
+                          <property name="pady">4</property>
+                          <property name="side">top</property>
+                        </layout>
+                        <child>
+                          <object class="ttk.Radiobutton" id="radiobutton1">
+                            <property name="text" translatable="yes">nada</property>
+                            <property name="value">nada</property>
+                            <property name="variable">string:v_compresion</property>
+                            <layout manager="pack">
+                              <property name="padx">10</property>
+                              <property name="side">left</property>
+                            </layout>
+                          </object>
+                        </child>
+                        <child>
+                          <object class="ttk.Radiobutton" id="radiobutton2">
+                            <property name="text" translatable="yes">1024&gt;</property>
+                            <property name="value">1024&gt;</property>
+                            <property name="variable">string:v_compresion</property>
+                            <layout manager="pack">
+                              <property name="padx">10</property>
+                              <property name="side">left</property>
+                            </layout>
+                          </object>
+                        </child>
+                        <child>
+                          <object class="ttk.Radiobutton" id="radiobutton3">
+                            <property name="text" translatable="yes">2048&gt;</property>
+                            <property name="value">2048&gt;</property>
+                            <property name="variable">string:v_compresion</property>
+                            <layout manager="pack">
+                              <property name="padx">10</property>
+                              <property name="side">left</property>
+                            </layout>
+                          </object>
+                        </child>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="ttk.Frame" id="frame3">
+                        <property name="width">200</property>
+                        <layout manager="pack">
+                          <property name="pady">4</property>
+                          <property name="side">top</property>
+                        </layout>
+                        <child>
+                          <object class="ttk.Label" id="labelMensaje" named="True">
+                            <property name="style">danger.TLabel</property>
+                            <property name="text" translatable="yes">.....</property>
+                            <property name="width">55</property>
+                            <layout manager="pack">
+                              <property name="side">left</property>
+                            </layout>
+                          </object>
+                        </child>
+                        <child>
+                          <object class="ttk.Button" id="buttonEjecutar" named="True">
+                            <property name="command" type="command" cbtype="simple">onBtnEjecutarClicked</property>
+                            <property name="text" translatable="yes">ejecutar</property>
+                            <layout manager="pack">
+                              <property name="side">right</property>
+                            </layout>
+                          </object>
+                        </child>
+                      </object>
+                    </child>
+                  </object>
+                </child>
+              </object>
+            </child>
+            <child>
+              <object class="ttk.Notebook.Tab" id="tab2">
+                <property name="text" translatable="yes">addMetadataToJPGs</property>
+                <child>
+                  <object class="ttk.Frame" id="frame7">
+                    <property name="width">400</property>
+                    <layout manager="pack">
+                      <property name="side">top</property>
+                    </layout>
+                    <child>
+                      <object class="ttk.Frame" id="frame4">
+                        <property name="width">400</property>
+                        <layout manager="pack">
+                          <property name="expand">true</property>
+                          <property name="fill">x</property>
+                          <property name="pady">4</property>
+                          <property name="side">top</property>
+                        </layout>
+                        <child>
+                          <object class="ttk.Label" id="label6">
+                            <property name="text" translatable="yes">chooseZIP</property>
+                            <property name="width">10</property>
+                            <layout manager="pack">
+                              <property name="side">left</property>
+                            </layout>
+                          </object>
+                        </child>
+                        <child>
+                          <object class="pygubu.widgets.PathChooserInput" id="pathchooserinput1">
+                            <property name="defaultextension">.zip</property>
+                            <bind sequence="&lt;Enter&gt;" handler="arreglarElPath" add="True" />
+                            <layout manager="pack">
+                              <property name="expand">true</property>
+                              <property name="fill">x</property>
+                              <property name="side">right</property>
+                            </layout>
+                          </object>
+                        </child>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="ttk.Frame" id="frame8">
+                        <property name="width">200</property>
+                        <layout manager="pack">
+                          <property name="expand">true</property>
+                          <property name="fill">x</property>
+                          <property name="pady">5</property>
+                          <property name="side">top</property>
+                        </layout>
+                        <child>
+                          <object class="ttk.Label" id="labelMetadata" named="True">
+                            <property name="text" translatable="yes">metadata</property>
+                            <bind sequence="&lt;Enter&gt;" handler="onMouseAdentro" add="True" />
+                            <layout manager="pack">
+                              <property name="expand">true</property>
+                              <property name="side">left</property>
+                            </layout>
+                          </object>
+                        </child>
+                        <child>
+                          <object class="ttk.Entry" id="entryMetadata" named="True">
+                            <property name="width">60</property>
+                            <layout manager="pack">
+                              <property name="side">left</property>
+                            </layout>
+                          </object>
+                        </child>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="ttk.Frame" id="frame9">
+                        <property name="width">200</property>
+                        <layout manager="pack">
+                          <property name="expand">true</property>
+                          <property name="fill">x</property>
+                          <property name="side">top</property>
+                        </layout>
+                        <child>
+                          <object class="ttk.Button" id="button4">
+                            <property name="command" type="command" cbtype="simple">onClickLeerZip</property>
+                            <property name="text" translatable="yes">leerDentro ZIP</property>
+                            <property name="width">14</property>
+                            <layout manager="pack">
+                              <property name="expand">true</property>
+                              <property name="padx">20</property>
+                              <property name="side">left</property>
+                            </layout>
+                          </object>
+                        </child>
+                        <child>
+                          <object class="ttk.Label" id="label8">
+                            <property name="text" translatable="yes">nivelDentro ZIP</property>
+                            <layout manager="pack">
+                              <property name="side">left</property>
+                            </layout>
+                          </object>
+                        </child>
+                        <child>
+                          <object class="ttk.Spinbox" id="spinboxNivel" named="True">
+                            <property name="from_">2</property>
+                            <property name="increment">1</property>
+                            <property name="text" translatable="yes">5</property>
+                            <property name="to">10</property>
+                            <property name="width">3</property>
+                            <layout manager="pack">
+                              <property name="side">left</property>
+                            </layout>
+                          </object>
+                        </child>
+                        <child>
+                          <object class="ttk.Button" id="button3">
+                            <property name="command" type="command" cbtype="simple">onClickGrabaMetadata</property>
+                            <property name="text" translatable="yes">grabaJPGmetadata</property>
+                            <property name="width">20</property>
+                            <layout manager="pack">
+                              <property name="expand">true</property>
+                              <property name="padx">20</property>
+                              <property name="side">right</property>
+                            </layout>
+                          </object>
+                        </child>
+                      </object>
+                    </child>
+                  </object>
+                </child>
+              </object>
+            </child>
+          </object>
+        </child>
+      </object>
+    </child>
+  </object>
+</interface>

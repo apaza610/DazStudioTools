@@ -21,8 +21,7 @@ class OrozcoUI:
         self.builder.add_resource_paths(RESOURCE_PATHS)
         self.builder.add_from_file(PROJECT_UI)
         # Main widget
-        self.mainwindow: tk.Toplevel = self.builder.get_object(
-            "toplevel1", master)
+        self.mainwindow: tk.Toplevel = self.builder.get_object("toplevel1", master)
         self.builder.connect_callbacks(self)
 
         self.pathchooserinput1 = self.builder.get_object("pathchooserinput1")
