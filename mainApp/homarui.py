@@ -197,18 +197,20 @@ class HomarUI:
         self.entryNewNameJPG.delete(0, tk.END)
         # self.entryNewNameJPG.insert(0, folderDelJPG / (nombreDelJPG.replace(" ", "_")))
         self.entryNewNameJPG.insert(0, nombreDelJPG)
-        self.pathNewDelJPG = self.pathOldDelJPG.parent / (self.entryNewNameJPG.get() + ".jpg")
 
     def singleRenameJPG(self):
+        self.pathNewDelJPG = self.pathOldDelJPG.parent / (self.entryNewNameJPG.get() + ".jpg")
         self.convert_resize_rename_jpg(self.pathOldDelJPG, self.pathNewDelJPG)
 
     def batchRenameJPGs(self):
-        jpg_paths = filedialog.askopenfilenames(title="seleccionar Imagenes", filetypes=[("imagenes","*.jpg *.png *.webp")])
+        self.pathNewDelJPG = self.pathOldDelJPG.parent / (self.entryNewNameJPG.get() + ".jpg")
+
+        jpg_paths = filedialog.askopenfilenames(title="seleccionar Imagenes",initialdir=self.pathOldDelJPG.parent , filetypes=[("imagenes","*.jpg *.png *.webp")])
         for index, jpg_path in enumerate(jpg_paths, start=1):
             print(f"{index}: {jpg_path}")
             self.pathNewDelJPG = self.pathNewDelJPG.with_name(f"{self.entryNewNameJPG.get()}{index}.jpg")
             self.convert_resize_rename_jpg(Path(jpg_path), self.pathNewDelJPG)
-        # self.convert_resize_rename_jpg(Path("c:/folder/foto.jpg"), Path("c:/folder/libro.jpg"))
+            # self.convert_resize_rename_jpg(Path("c:/folder/foto.jpg"), Path("c:/folder/libro.jpg"))
         pass
 
     def convert_resize_rename_jpg(self, viejo_path: Path, nuevo_path: Path):
