@@ -200,22 +200,28 @@ class HomarUI:
         self.pathNewDelJPG = self.pathOldDelJPG.parent / (self.entryNewNameJPG.get() + ".jpg")
 
     def singleRenameJPG(self):
-        # resize if the image is bigger than 400px
-        if self.pathOldDelJPG.suffix.lower() != ".jpg":             # convertir a JPG si es necesario
-            imagen = Image.open(self.pathOldDelJPG)
-            imagen.convert("RGB").save(self.pathNewDelJPG, "JPEG")
-            os.remove(self.pathOldDelJPG)
-        else:                                                       # o simplemente renombrar
-            os.rename(self.pathOldDelJPG, self.pathNewDelJPG)
-
-        # reSize if one side of the image is more than 400px
-        subprocess.run(["magick","convert",self.pathNewDelJPG,"-resize","400x400>",self.pathNewDelJPG])
+        self.convert_resize_rename_jpg(self.pathOldDelJPG, self.pathNewDelJPG)
 
     def batchRenameJPGs(self):
-        
+        jpg_paths = filedialog.askopenfilenames(title="seleccionar Imagenes", filetypes=[("imagenes","*.jpg *.png *.webp")])
+        for index, jpg_path in enumerate(jpg_paths, start=1):
+            print(f"{index}: {jpg_path}")
+            self.pathNewDelJPG = self.pathNewDelJPG.with_name(f"{self.entryNewNameJPG.get()}{index}.jpg")
+            self.convert_resize_rename_jpg(Path(jpg_path), self.pathNewDelJPG)
+        # self.convert_resize_rename_jpg(Path("c:/folder/foto.jpg"), Path("c:/folder/libro.jpg"))
         pass
 
-    
+    def convert_resize_rename_jpg(self, viejo_path: Path, nuevo_path: Path):
+        # print(f"de: {viejo_path.stem} a: {nuevo_path.parent}")
+        if viejo_path.suffix.lower() != ".jpg":                     # convertir a JPG si es necesario
+            imagen = Image.open(viejo_path)
+            imagen.convert("RGB").save(nuevo_path, "JPEG")
+            os.remove(viejo_path)
+        else:                                                       # o simplemente renombrar
+            os.rename(viejo_path, nuevo_path)
+
+        # reSize if one side of the image is more than 400px
+        subprocess.run(["magick","convert",nuevo_path,"-resize","400x400>",nuevo_path])
 
 if __name__ == "__main__":
     app = HomarUI()
