@@ -184,23 +184,24 @@ class HomarUI:
         self.pathOldDelJPG = Path(pyperclip.paste())
         self.entryPathJPG.insert(0, self.pathOldDelJPG)
 
+    def capitalizar(self, hallado):         # primera letra a Mayuscula
+        return hallado.group(1).upper()
+
     def buildNameJPG(self):
         self.entryNewNameJPG = self.builder.get_object("entryNewNameJPG")
         # folderDelJPG = self.pathOldDelJPG.parent
         nombreDelJPG = self.pathOldDelJPG.stem      # nombre sin extension
 
-        palabras = nombreDelJPG.split()                                     # quitando espacios en blanco
-        palabras_uppercase = [palabra.capitalize() for palabra in palabras] # capitalizando la primera letra
-        nombreDelJPGsinEspacios = ''.join(palabras_uppercase)
+        nombreDelJPGsinEspacios = re.sub(r'[\s-](\b\w)', self.capitalizar, nombreDelJPG)    # remover white spaces y capitalizar
 
         self.v_tipoAsset = self.builder.get_variable("v_tipoAsset")
         self.v_generacion = self.builder.get_variable("v_generacion")
         self.v_genero = self.builder.get_variable("v_genero")
-        nombreDelJPG = f"{self.v_tipoAsset.get()}_{self.v_generacion.get()}{self.v_genero.get()}{nombreDelJPGsinEspacios}"
+        nombreFinal = f"{self.v_tipoAsset.get()}_{self.v_generacion.get()}{self.v_genero.get()}{nombreDelJPGsinEspacios}"
 
         self.entryNewNameJPG.delete(0, tk.END)
         # self.entryNewNameJPG.insert(0, folderDelJPG / (nombreDelJPG.replace(" ", "_")))
-        self.entryNewNameJPG.insert(0, nombreDelJPG)
+        self.entryNewNameJPG.insert(0, nombreFinal)
 
     def singleRenameJPG(self):
         self.pathNewDelJPG = self.pathOldDelJPG.parent / (self.entryNewNameJPG.get() + ".jpg")
