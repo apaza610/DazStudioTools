@@ -189,10 +189,14 @@ class HomarUI:
         # folderDelJPG = self.pathOldDelJPG.parent
         nombreDelJPG = self.pathOldDelJPG.stem      # nombre sin extension
 
+        palabras = nombreDelJPG.split()                                     # quitando espacios en blanco
+        palabras_uppercase = [palabra.capitalize() for palabra in palabras] # capitalizando la primera letra
+        nombreDelJPGsinEspacios = ''.join(palabras_uppercase)
+
         self.v_tipoAsset = self.builder.get_variable("v_tipoAsset")
         self.v_generacion = self.builder.get_variable("v_generacion")
         self.v_genero = self.builder.get_variable("v_genero")
-        nombreDelJPG = f"{self.v_tipoAsset.get()}_{self.v_generacion.get()}{self.v_genero.get()}{nombreDelJPG}"
+        nombreDelJPG = f"{self.v_tipoAsset.get()}_{self.v_generacion.get()}{self.v_genero.get()}{nombreDelJPGsinEspacios}"
 
         self.entryNewNameJPG.delete(0, tk.END)
         # self.entryNewNameJPG.insert(0, folderDelJPG / (nombreDelJPG.replace(" ", "_")))
