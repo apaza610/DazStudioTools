@@ -119,7 +119,7 @@ class HomarUI:
         
         powershell_command = f'Copy-Item -Path "{self.folderZIPs}\\Content\\*" -Destination "{self.folderDAZ}" -Recurse -Force'
         try:
-            subprocess.run(["powershell", "-Command", powershell_command], check=True)
+            p = subprocess.run(["powershell", "-Command", powershell_command], check=True)
             # print(f"contenidos movidos successfully.")
             self.mensaje.configure(text="Contenido fue movido")
             shutil.rmtree(self.folderZIPs + "/Content")

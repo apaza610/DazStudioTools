@@ -23,11 +23,12 @@ Adds metadata to JPGs that I use in my webSite that shows all assets I have</set
     <customwidgets />
   </project>
   <object class="tk.Toplevel" id="toplevel2">
-    <property name="height">160</property>
+    <property name="height">230</property>
     <property name="title" translatable="yes">DazStudio tools</property>
     <property name="width">440</property>
     <child>
       <object class="ttk.Frame" id="frame5">
+        <property name="height">230</property>
         <property name="width">200</property>
         <layout manager="pack">
           <property name="padx">4</property>
@@ -57,6 +58,7 @@ Adds metadata to JPGs that I use in my webSite that shows all assets I have</set
                         <layout manager="pack">
                           <property name="expand">true</property>
                           <property name="fill">x</property>
+                          <property name="pady">4</property>
                           <property name="side">top</property>
                         </layout>
                         <child>
@@ -87,6 +89,7 @@ Adds metadata to JPGs that I use in my webSite that shows all assets I have</set
                         <layout manager="pack">
                           <property name="expand">true</property>
                           <property name="fill">x</property>
+                          <property name="pady">4</property>
                           <property name="side">top</property>
                         </layout>
                         <child>
@@ -157,6 +160,17 @@ Adds metadata to JPGs that I use in my webSite that shows all assets I have</set
                                   <object class="ttk.Radiobutton" id="radiobutton8">
                                     <property name="text" translatable="yes">poses</property>
                                     <property name="value">poses</property>
+                                    <property name="variable">string:v_tipoAsset</property>
+                                    <layout manager="pack">
+                                      <property name="anchor">w</property>
+                                      <property name="side">top</property>
+                                    </layout>
+                                  </object>
+                                </child>
+                                <child>
+                                  <object class="ttk.Radiobutton" id="radiobutton10">
+                                    <property name="text" translatable="yes">skydome</property>
+                                    <property name="value">skydome</property>
                                     <property name="variable">string:v_tipoAsset</property>
                                     <layout manager="pack">
                                       <property name="anchor">w</property>
@@ -351,6 +365,7 @@ Adds metadata to JPGs that I use in my webSite that shows all assets I have</set
                         <property name="width">200</property>
                         <layout manager="pack">
                           <property name="fill">x</property>
+                          <property name="pady">4</property>
                           <property name="side">top</property>
                         </layout>
                         <child>
