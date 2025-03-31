@@ -38,6 +38,7 @@ Adds metadata to JPGs that I use in my webSite that shows all assets I have</set
         <child>
           <object class="ttk.Notebook" id="notebook2">
             <property name="width">440</property>
+            <bind sequence="&lt;&lt;NotebookTabChanged&gt;&gt;" handler="cambio_de_tab" add="True" />
             <layout manager="pack">
               <property name="side">top</property>
             </layout>

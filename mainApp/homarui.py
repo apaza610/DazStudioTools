@@ -177,7 +177,7 @@ class HomarUI:
             print("se ha quitado la basura")
 
     #----------------- Tab3: reName JPGs for my website -----------------------
-
+    
     def pegarPathJPG(self, event=None):
         self.entryPathJPG = self.builder.get_object("entryPathJPG")
         self.entryPathJPG.delete(0, tk.END)
@@ -229,6 +229,24 @@ class HomarUI:
 
         # reSize if one side of the image is more than 400px
         subprocess.run(["magick","convert",nuevo_path,"-resize","400x400>",nuevo_path])
+
+    def cambio_de_tab(self, evento):
+        print("esto ha cambiado")
+        print(evento)
+        self.entryPathJPG = self.builder.get_object("entryPathJPG")
+        partes = self.entryPathJPG.get().split("\\")
+        folder = "\\".join(partes[:-1])
+        # print(self.entryPathJPG.get())
+        # print(folder)
+        self.folderZIPs = self.builder.get_object("entryFolderZIPs")
+        self.folderZIPs.delete(0, tk.END)
+        self.folderZIPs.insert(0, folder)
+
+        self.pathchooserinput1 = self.builder.get_object("pathchooserinput1")
+        # self.pathchooserinput1.delete(0, tk.END)
+        # self.pathchooserinput1.insert(0, folder)
+        self.pathchooserinput1.configure(path=folder)
+
 
 if __name__ == "__main__":
     app = HomarUI()
