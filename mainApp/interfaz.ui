@@ -302,6 +302,28 @@ Adds metadata to JPGs that I use in my webSite that shows all assets I have</set
                                 </layout>
                               </object>
                             </child>
+                            <child>
+                              <object class="ttk.Radiobutton" id="radiobutton17">
+                                <property name="text" translatable="yes">M4</property>
+                                <property name="value">M4</property>
+                                <property name="variable">string:v_generacion</property>
+                                <layout manager="pack">
+                                  <property name="anchor">w</property>
+                                  <property name="side">top</property>
+                                </layout>
+                              </object>
+                            </child>
+                            <child>
+                              <object class="ttk.Radiobutton" id="radiobutton18">
+                                <property name="text" translatable="yes">V4</property>
+                                <property name="value">V4</property>
+                                <property name="variable">string:v_generacion</property>
+                                <layout manager="pack">
+                                  <property name="anchor">w</property>
+                                  <property name="side">top</property>
+                                </layout>
+                              </object>
+                            </child>
                           </object>
                         </child>
                         <child>
