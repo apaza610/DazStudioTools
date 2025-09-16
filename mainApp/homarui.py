@@ -67,7 +67,7 @@ class HomarUI:
                             else:
                                 can_deCompress = False
                                 messagebox.showinfo("Mensaje", f"El {documento} no contiene folder Content")
-                                sys.exit()
+                                # sys.exit()
                             
         if can_deCompress == True:
             for zip_file in Path(os.getcwd()).rglob('*.zip'):
@@ -143,21 +143,24 @@ class HomarUI:
         zip_path = self.pathchooserinput1.entry.get()
         zip_nivel = int(self.spinboxNivel.get())
         print(f"\033[92m ------{zip_path} nivel: {zip_nivel}------ \033[0m")
+        folders = set()
 
-        # Open the zip file
         with zipfile.ZipFile(zip_path, 'r') as zip_ref:
-            # List all the contents of the zip file
-            zip_contents = zip_ref.namelist()
-            
-            # Print each file/folder in the zip file
-            for item in zip_contents:
-                parts = item.split('/')
-                if len(parts) == zip_nivel and parts[0] and  zip_ref.getinfo(item).is_dir() and not (re.search(r"/[Dd]ata/", item) or re.search(r"/[Rr]untime/", item)):
-                    cadena = item.replace('Content/','')
-                    print(f"{cadena}")
-                    pyperclip.copy(cadena)
-                # else:
-                #     print(f"File: {item}")
+            for entry in zip_ref.namelist():
+                # Normalize and split the path
+                parts = entry.strip('/').split('/')
+                if entry.endswith('/'):
+                    folders.add('/'.join(parts))
+                elif len(parts) > 1:
+                    # Infer folder from file path
+                    folders.add('/'.join(parts[:-1]))
+
+        for folder in folders:
+            if len(folder.split('/')) == zip_nivel and not (re.search(r"/[Dd]ata/", folder) or re.search(r"/[Rr]untime/", folder)):
+                # print("***" + folder)
+                cadena = folder.replace('Content/','')
+                print(f"{cadena}")
+                pyperclip.copy(cadena)
 
     def onClickGrabaMetadata(self):
         jpg_path = filedialog.askopenfilename(

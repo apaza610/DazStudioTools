@@ -587,7 +587,12 @@ Adds metadata to JPGs that I use in my webSite that shows all assets I have</set
                         </child>
                         <child>
                           <object class="ttk.Entry" id="entryFolderDAZ" named="True">
-                            <property name="text" translatable="yes">E:\assetsDaz\</property>
+                            <property name="font">TkTextFont</property>
+                            <property name="justify">left</property>
+                            <property name="state">readonly</property>
+                            <property name="style">info.TEntry</property>
+                            <property name="takefocus">false</property>
+                            <property name="text" translatable="yes">E:\assetsDAZ\mainDAZ\</property>
                             <property name="width">60</property>
                             <layout manager="pack">
                               <property name="side">right</property>
