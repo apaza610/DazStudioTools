@@ -614,7 +614,7 @@ Adds metadata to JPGs that I use in my webSite that shows all assets I have</set
                             <property name="state">normal</property>
                             <property name="style">danger.Inverse.TLabel</property>
                             <property name="takefocus">true</property>
-                            <property name="text" translatable="yes">folder ZIPs</property>
+                            <property name="text" translatable="yes">.ZIP o folder ZIPs</property>
                             <layout manager="pack">
                               <property name="side">left</property>
                             </layout>

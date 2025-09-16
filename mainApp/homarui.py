@@ -46,48 +46,53 @@ class HomarUI:
         self.mainwindow.mainloop()
     
     #----------------- Tab1: Populate Daz library from ZIPs -----------------------
+
     def onBtnEjecutarClicked(self):
         self.folderZIPs = self.builder.get_object("entryFolderZIPs")
         self.mensaje = self.builder.get_object("labelMensaje")
         self.mensaje.configure(text="..")
-
-        os.chdir(self.folderZIPs.get())        # cambiar a folder de trabajo
         
-        # advertir a usuario si el .zip no contiene folder "Content"
-        can_deCompress: bool = False
-        for raiz, folders, documentos in os.walk(os.getcwd()):
-            for documento in documentos:
-                if documento.endswith('.zip'):
-                    # messagebox.showinfo("mensaje", raiz + "...." + documento)  # E:\assets3D\main\Dog8...IM0005097-01_DazDog8.zip
-                    with zipfile.ZipFile(documento) as zip_ref:
-                        for item in zip_ref.namelist():
-                            if item.startswith('Content'):
-                                can_deCompress = True
-                                break
-                            else:
-                                can_deCompress = False
-                                messagebox.showinfo("Mensaje", f"El {documento} no contiene folder Content")
-                                # sys.exit()
-                            
-        if can_deCompress == True:
-            for zip_file in Path(os.getcwd()).rglob('*.zip'):
-                with zipfile.ZipFile(zip_file, 'r') as zip_ref:
-                    print(f"desComprimiendo {zip_ref.filename}")
-                    zip_ref.extractall(os.getcwd())
-                self.mensaje.configure(text="desComprimido..")
-                # messagebox.showinfo("Mensaje", "desComprimido")        
-            # messagebox.showinfo("Mensaje", "deCompresion ejecutada")
-            
-            winsound.Beep(450,500)
-            print("------------------unCompress terminado-------------------------")
-            self.resize_images()
-            winsound.Beep(550,500)
-            print("------------------reSize terminado-------------------------")
-            self.mover_contents()
-            winsound.Beep(650,500)
-            print("------------------move to destination terminado-------------------------")
-        else:
-            self.mensaje.configure(text="still Comprimido")
+        zip_path = Path(self.folderZIPs.get())          # E:\assetsDAZ\main\aaa1\GCC20240125-01_GCCFF7Sephiroth.zip
+        parent_path = ""                                # E:\assetsDAZ\main\aaa1
+
+        if zip_path.suffix.lower() == ".zip":                    # si usuario da un zip
+            self.desCompresor(zip_path, zip_path.parent)
+            parent_path = zip_path.parent
+        else:                                                   # si usuario da un folder
+            zip_files = [f for f in os.listdir(zip_path) if f.lower().endswith('.zip')]
+            for zip_file in zip_files:
+                self.desCompresor(zip_path / zip_file, zip_path)
+                # print(str(zip_path) + "----------------------" + zip_file)
+            parent_path = zip_path
+
+        self.moveContentToMain(parent_path)
+
+    def desCompresor(self, zip_path, parent_path):
+        print(f"\033[93mEstoy descomprimiendo {zip_path} \033[0m")
+        try:
+            with zipfile.ZipFile(zip_path, 'r') as zip_ref:
+                zip_ref.extractall(parent_path)
+                print(f"✅ Extracted to: {parent_path}")
+        except zipfile.BadZipFile:
+            print("❌ The file is not a valid ZIP archive.")
+
+    def moveContentToMain(self, source_dir):            # mover el contenido de carpeta Content al folder DAZ final
+        print("moviendo desde 📁: " + str(source_dir / "Content"))
+
+        source_dir = source_dir / "Content"
+        target_dir = r"E:\assetsDAZ\mainDAZ"
+
+        powershell_command = f'Copy-Item -Path "{source_dir}\\*" -Destination "{target_dir}" -Recurse -Force'
+        try:
+            p = subprocess.run(["powershell", "-Command", powershell_command], check=True)
+            # print(f"contenidos movidos successfully.")
+            self.mensaje.configure(text="Contenido fue movido")
+            shutil.rmtree(source_dir)
+        except subprocess.CalledProcessError as e:
+            self.mensaje.configure(text="Error al mover")
+            print(f"Error moviendo contenidos: {e}")
+
+        winsound.MessageBeep(winsound.MB_ICONEXCLAMATION)       # Play a sound to alert the user (default Windows beep)
 
     def resize_images(self):
         folder_path = Path(self.folderZIPs.get() + "/Content")
@@ -111,22 +116,6 @@ class HomarUI:
                     case _:
                         print("ninguna opcion elegida")
         # messagebox.showinfo("Mensaje", "reSize ejecutado")
-        
-    # mover el contenido de carpeta Content al folder DAZ final
-    def mover_contents(self):
-        self.folderDAZ = self.builder.get_object("entryFolderDAZ").get()
-        self.folderZIPs = self.builder.get_object("entryFolderZIPs").get()
-        
-        powershell_command = f'Copy-Item -Path "{self.folderZIPs}\\Content\\*" -Destination "{self.folderDAZ}" -Recurse -Force'
-        try:
-            p = subprocess.run(["powershell", "-Command", powershell_command], check=True)
-            # print(f"contenidos movidos successfully.")
-            self.mensaje.configure(text="Contenido fue movido")
-            shutil.rmtree(self.folderZIPs + "/Content")
-        except subprocess.CalledProcessError as e:
-            self.mensaje.configure(text="Error al mover")
-            print(f"Error moviendo contenidos: {e}")
-        # messagebox.showinfo("Mensaje", "mover ejecutado")
     
     #----------------- Tab2: grabar metadata on JPGs ------------------------------
     def arreglarElPath(self, event=None):
@@ -180,7 +169,6 @@ class HomarUI:
             print("se ha quitado la basura")
 
     #----------------- Tab3: reName JPGs for my website -----------------------
-    
     def pegarPathJPG(self, event=None):
         self.entryPathJPG = self.builder.get_object("entryPathJPG")
         self.entryPathJPG.delete(0, tk.END)
