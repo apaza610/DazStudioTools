@@ -33,7 +33,7 @@ class HomarUI:
         self.builder.add_from_file(PROJECT_UI)
         # Main widget
         self.mainwindow: tk.Toplevel = self.builder.get_object("toplevel2", master)
-        self.mainwindow.geometry("+50+800")
+        self.mainwindow.geometry("+10+1220")
         self.builder.connect_callbacks(self)
 
         self.v_elegido = self.builder.get_variable("v_compresion")
@@ -198,8 +198,6 @@ class HomarUI:
         # self.entryNewNameJPG.insert(0, folderDelJPG / (nombreDelJPG.replace(" ", "_")))
         self.entryNewNameJPG.insert(0, nombreFinal)
 
-        self.bring_console_to_front()
-
     def singleRenameJPG(self):
         self.pathNewDelJPG = self.pathOldDelJPG.parent / (self.entryNewNameJPG.get() + ".jpg")
         self.convert_resize_rename_jpg(self.pathOldDelJPG, self.pathNewDelJPG)
@@ -235,33 +233,42 @@ class HomarUI:
         self.folderZIPs = self.builder.get_object("entryFolderZIPs")
         self.folderZIPs.delete(0, tk.END)
         self.folderZIPs.insert(0, folder)
+        # self.bring_console_to_front()
+        self.bring_window_by_partial_title("py.exe")
 
         self.pathchooserinput1 = self.builder.get_object("pathchooserinput1")
         self.pathchooserinput1.configure(path=folder)
 
-    def bring_console_to_front(self):
-        # For classic cmd.exe, PowerShell, or Python console:
-        # hwnd = win32gui.FindWindow("ConsoleWindowClass", None)
+    def bring_window_by_partial_title(self, partial):
+        target_hwnd = None
 
-        # For Windows Terminal (CASCADIA_HOSTING_WINDOW_CLASS):
-        hwnd = win32gui.FindWindow("CASCADIA_HOSTING_WINDOW_CLASS", None)
+        def enum_callback(hwnd, _):
+            nonlocal target_hwnd
+            if win32gui.IsWindowVisible(hwnd):
+                title = win32gui.GetWindowText(hwnd)
+                if partial.lower() in title.lower():
+                    target_hwnd = hwnd
+                    return False  # stop enumeration
+            return True
 
-        if hwnd:
+        win32gui.EnumWindows(enum_callback, None)
+
+        if target_hwnd:
             self.mainwindow.update_idletasks()
             gui_x = self.mainwindow.winfo_x()
             gui_y = self.mainwindow.winfo_y()
             gui_width = self.mainwindow.winfo_width()
             
-            rect = win32gui.GetWindowRect(hwnd)
+            rect = win32gui.GetWindowRect(target_hwnd)
             con_width = rect[2] - rect[0]
             con_height = rect[3] - rect[1]
 
-            win32gui.MoveWindow(hwnd, gui_x + gui_width, gui_y, con_width, con_height, True)
+            win32gui.MoveWindow(target_hwnd, gui_x + gui_width, gui_y, con_width, con_height, True)
 
-            win32gui.ShowWindow(hwnd, win32con.SW_RESTORE)  # Restore if minimized
-            win32gui.SetForegroundWindow(hwnd)              # Bring to front
+            win32gui.ShowWindow(target_hwnd, win32con.SW_RESTORE)
+            win32gui.SetForegroundWindow(target_hwnd)
         else:
-            print("Console window not found")
+            print(f'No window with "{partial}" in title found')
 
 if __name__ == "__main__":
     app = HomarUI()
