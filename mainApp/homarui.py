@@ -33,6 +33,7 @@ class HomarUI:
         self.builder.add_from_file(PROJECT_UI)
         # Main widget
         self.mainwindow: tk.Toplevel = self.builder.get_object("toplevel2", master)
+        self.mainwindow.geometry("+50+800")
         self.builder.connect_callbacks(self)
 
         self.v_elegido = self.builder.get_variable("v_compresion")
@@ -246,6 +247,17 @@ class HomarUI:
         hwnd = win32gui.FindWindow("CASCADIA_HOSTING_WINDOW_CLASS", None)
 
         if hwnd:
+            self.mainwindow.update_idletasks()
+            gui_x = self.mainwindow.winfo_x()
+            gui_y = self.mainwindow.winfo_y()
+            gui_width = self.mainwindow.winfo_width()
+            
+            rect = win32gui.GetWindowRect(hwnd)
+            con_width = rect[2] - rect[0]
+            con_height = rect[3] - rect[1]
+
+            win32gui.MoveWindow(hwnd, gui_x + gui_width, gui_y, con_width, con_height, True)
+
             win32gui.ShowWindow(hwnd, win32con.SW_RESTORE)  # Restore if minimized
             win32gui.SetForegroundWindow(hwnd)              # Bring to front
         else:
