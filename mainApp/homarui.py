@@ -17,6 +17,9 @@ import shutil
 from pathlib import Path
 import winsound
 
+import win32gui
+import win32con
+
 from PIL import Image
 
 PROJECT_PATH = pathlib.Path(__file__).parent
@@ -194,6 +197,8 @@ class HomarUI:
         # self.entryNewNameJPG.insert(0, folderDelJPG / (nombreDelJPG.replace(" ", "_")))
         self.entryNewNameJPG.insert(0, nombreFinal)
 
+        self.bring_console_to_front()
+
     def singleRenameJPG(self):
         self.pathNewDelJPG = self.pathOldDelJPG.parent / (self.entryNewNameJPG.get() + ".jpg")
         self.convert_resize_rename_jpg(self.pathOldDelJPG, self.pathNewDelJPG)
@@ -233,6 +238,18 @@ class HomarUI:
         self.pathchooserinput1 = self.builder.get_object("pathchooserinput1")
         self.pathchooserinput1.configure(path=folder)
 
+    def bring_console_to_front(self):
+        # For classic cmd.exe, PowerShell, or Python console:
+        # hwnd = win32gui.FindWindow("ConsoleWindowClass", None)
+
+        # For Windows Terminal (CASCADIA_HOSTING_WINDOW_CLASS):
+        hwnd = win32gui.FindWindow("CASCADIA_HOSTING_WINDOW_CLASS", None)
+
+        if hwnd:
+            win32gui.ShowWindow(hwnd, win32con.SW_RESTORE)  # Restore if minimized
+            win32gui.SetForegroundWindow(hwnd)              # Bring to front
+        else:
+            print("Console window not found")
 
 if __name__ == "__main__":
     app = HomarUI()
